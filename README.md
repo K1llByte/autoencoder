@@ -13,7 +13,7 @@ python src/main.py
 Each neural network model we devoleped and tested will be packed in a module
 to be reused by the classifier notebook (or other).
 
-- `data/` - All image data including the target `gtsrb/` dataset and some images
+- `data/` - All image data including the target `/` dataset and some images
 for quick testing
 
 - `models` - Saved Models to reuse
