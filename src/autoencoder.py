@@ -26,8 +26,6 @@ import IPython.display as display
 BATCH_SIZE = 32
 IMAGE_SIZE = 64
 LATENT_DIM = 2
-#class_ids = np.array(['00000','00001', '00002', '00003', '00004', '00005', '00006', '00007'])
-#class_names = ['Limit 20', 'Limit 30', 'Limit 51', 'Limit 60', 'Limit 70', 'Limit 80', 'Limit 100', 'Limit 120']
 class_ids = np.array(os.listdir(f"../data/chinese_mnist/train_images"))
 class_names = class_ids
 NUM_CLASSES = len(class_ids)
@@ -153,6 +151,7 @@ def train(in_model, data, model_file='models/autoencoder',num_epochs=20):
     train_set, val_set, dataset_length = data
     steps = math.ceil(dataset_length * 0.3)/BATCH_SIZE
 
+    encoder, decoder, autoencoder = in_model
 
 
     if not os.path.exists(model_file):
@@ -173,17 +172,17 @@ def train(in_model, data, model_file='models/autoencoder',num_epochs=20):
         #values = in_model.evaluate(test_set, verbose=1)
 
         os.mkdir(model_file)
-        in_model[0].save(f'{model_file}/encoder.h5')
-        in_model[1].save(f'{model_file}/decoder.h5')
-        in_model[2].save(f'{model_file}/autoencoder.h5')
+        encoder.save(f'{model_file}/encoder.h5')
+        decoder.save(f'{model_file}/decoder.h5')
+        autoencoder.save(f'{model_file}/autoencoder.h5')
 
-        
     else:
-        in_model[0] = tf.keras.models.load_model(f'{model_file}/encoder.h5')
-        in_model[1] = tf.keras.models.load_model(f'{model_file}/decoder.h5')
-        in_model[2] = tf.keras.models.load_model(f'{model_file}/autoencoder.h5')
+        encoder = tf.keras.models.load_model(f'{model_file}/encoder.h5')
+        decoder = tf.keras.models.load_model(f'{model_file}/decoder.h5')
+        autoencoder = tf.keras.models.load_model(f'{model_file}/autoencoder.h5')
         print("[INFO] Loaded Trained Model")
 
+    in_model = (encoder,decoder,autoencoder)
     return in_model
 
 def latent_predict(in_model, latent_params):
