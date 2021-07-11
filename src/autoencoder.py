@@ -192,6 +192,7 @@ def latent_predict(in_model, latent_params):
 def load_and_predict(in_model, data):
     _, _, autoencoder = in_model
     print("ok1")
+    print(type(data[1]))
     res = autoencoder.predict(data[1])
     print("ok2")
     return res

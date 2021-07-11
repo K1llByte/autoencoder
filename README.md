@@ -19,3 +19,10 @@ for quick testing
 - `models` - Saved Models to reuse
 
 - `src/` - Contains all scripts and notebooks
+
+<!--
+
+Relatorio:
+- Mudanças na Config dos parametros para o autoencoder
+
+-->
