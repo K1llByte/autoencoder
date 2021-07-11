@@ -21,15 +21,13 @@ LATENT_DIM = 2 # 64
 
 (train_X, train_Y), (test_X, test_Y) = mnist.load_data()
 
-print(train_X[0])
 
-
-# train_data = tf.keras.preprocessing.image_dataset_from_directory('data/chinese_mnist/train_images', batch_size=BATCH_SIZE, image_size=(128, 128))
+train_data = tf.keras.preprocessing.image_dataset_from_directory('data/chinese_mnist/train_images', batch_size=1, image_size=(128, 128))
 
 # Dataset.from_tensor_slices((train_X, train_Y)).shuffle(TRAIN_BUF).batch(BATCH_SIZE)
 
-# train_set_len = tf.data.experimental.cardinality(train_data).numpy()
-# print(train_set_len)
+train_set_len = tf.data.experimental.cardinality(train_data).numpy()
+print(train_set_len)
 
 #print(len(list(train_data)[0][0].numpy()))
 
