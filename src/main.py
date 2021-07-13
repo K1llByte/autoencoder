@@ -7,7 +7,7 @@ data = fetch_data("data/chinese_mnist")
 model = make_model(NUM_CLASSES, IMAGE_SIZE)
 
 # Train or load a pretrained model if it exists
-epochs = 25
+epochs = 23
 model = train(model, data, model_file=f'models/ae_{epochs}epochs', num_epochs=epochs)
 
 

@@ -25,7 +25,7 @@ import IPython.display as display
 
 BATCH_SIZE = 32
 IMAGE_SIZE = 64
-LATENT_DIM = 128
+LATENT_DIM = 64
 class_ids = np.array(os.listdir(f"../data/chinese_mnist/train_images"))
 class_names = class_ids
 NUM_CLASSES = len(class_ids)
