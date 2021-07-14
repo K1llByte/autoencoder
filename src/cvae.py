@@ -23,7 +23,7 @@ from utils import *
 
 BATCH_SIZE = 64
 LATENT_DIM = 2 # 64
-IMAGE_SIZE = (128, 128)
+IMAGE_SIZE = (64, 64)
 EPOCHS = 10
 
 def fetch_data(path):
@@ -129,12 +129,11 @@ def make_model():
     encoder = Conv2D(32, 3, strides=2, padding="same", activation="relu")(encoder_inputs)
     encoder = Conv2D(64, 3, strides=2, padding="same", activation="relu")(encoder)
     volume_size = K.int_shape(encoder)
+    print(volume_size)
     encoder = Flatten()(encoder)
     z_mean = Dense(LATENT_DIM)(encoder)
     z_logvar = Dense(LATENT_DIM)(encoder)
     z_layer = Sampling()([z_mean, z_logvar])
-
-    
 
     encoder = Model(encoder_inputs, [z_layer, z_mean, z_logvar], name="encoder")
 

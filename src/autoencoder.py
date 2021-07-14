@@ -197,6 +197,7 @@ def load_and_predict(in_model, data):
     print("ok2")
     return res
 
+    
 
     # tmp = list(data[1])
     # img = tmp[0]
