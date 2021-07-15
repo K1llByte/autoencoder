@@ -25,7 +25,7 @@ import IPython.display as display
 
 BATCH_SIZE = 32
 IMAGE_SIZE = 64
-LATENT_DIM = 128
+LATENT_DIM = 128 #64
 class_ids = np.array(os.listdir(f"../data/chinese_mnist/train_images"))
 class_names = class_ids
 NUM_CLASSES = len(class_ids)
@@ -68,13 +68,13 @@ def fetch_data(path="data/chinese_mnist"):
     val_set_len = tf.data.experimental.cardinality(val_set).numpy()
     
     train_set = train_set.cache()
-    train_set = train_set.shuffle(buffer_size=train_set_len)
+    #train_set = train_set.shuffle(buffer_size=train_set_len)
     train_set = train_set.batch(batch_size=BATCH_SIZE)
     train_set = train_set.prefetch(buffer_size=AUTOTUNE)
     # train_set = train_set.repeat()
 
     val_set = val_set.cache()
-    val_set = val_set.shuffle(buffer_size=val_set_len)
+    #val_set = val_set.shuffle(buffer_size=val_set_len)
     val_set = val_set.batch(batch_size = BATCH_SIZE)
     val_set = val_set.prefetch(buffer_size = AUTOTUNE)
     # val_set = val_set.repeat()
