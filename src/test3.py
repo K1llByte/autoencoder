@@ -14,7 +14,7 @@ HEIGHT = 64
 WIDTH = 64
 BATCH_SIZE = 8
 LATENT_SPACE_DIM = 64
-EPOCHS = 20
+EPOCHS = 25
 
 def convert_path_to_image(file_path):
   img = tf.io.read_file(file_path)
@@ -61,6 +61,10 @@ def make_model(num_channels=1):
     x = layers.LeakyReLU(alpha=0.2)(x)
     x = layers.BatchNormalization()(x)
 
+    x = layers.Conv2D(48, (3, 3), strides=2, padding="same")(x)
+    x = layers.LeakyReLU(alpha=0.2)(x)
+    x = layers.BatchNormalization()(x)
+
     x = layers.Conv2D(64, (3, 3), strides=2, padding="same")(x)
     x = layers.LeakyReLU(alpha=0.2)(x)
     x = layers.BatchNormalization()(x)
@@ -77,6 +81,10 @@ def make_model(num_channels=1):
     y = layers.Reshape(volume_size[1:4])(y)
 
     y = layers.Conv2DTranspose(64, (3, 3), strides=2, padding="same")(y)
+    y = layers.LeakyReLU(alpha=0.2)(y)
+    y = layers.BatchNormalization()(y)
+
+    y = layers.Conv2DTranspose(48, (3, 3), strides=2, padding="same")(y)
     y = layers.LeakyReLU(alpha=0.2)(y)
     y = layers.BatchNormalization()(y)
 
@@ -162,26 +170,27 @@ if __name__ == '__main__':
     model = make_model()
 
     # Train or load model
-    model = train(model, data, EPOCHS)
+    model = train(model, data, EPOCHS, save_path='models')
 
     # Get predictions for dataset
     preds = predict_all(model, data)
 
-
     print("[INFO] Displaying some results")
-    data_set = list(data[0])
+    def display_from_dataset(i):
+        data_set = list(data[0])
 
-    i = 0
-    original = data_set[i][1].numpy()[0]
-    predicted = data_set[i][1].numpy()[0]
+        (a,b) = divmod(i,BATCH_SIZE)
 
-    fig, axarr = plt.subplots(1,2)
-    axarr[0].imshow(data_set[i][1].numpy()[0])
-    axarr[0].set_title("original")
-    axarr[0].axis('off')
-    axarr[1].imshow(preds[i])
-    axarr[1].set_title("predicted")
-    axarr[1].axis('off')
+        original = data_set[a][1].numpy()[b]
+        predicted = preds[i]
 
-    fig.tight_layout()
-    plt.show()
+        fig, axarr = plt.subplots(1,2)
+        axarr[0].imshow(original)
+        axarr[0].set_title("original")
+        axarr[0].axis('off')
+        axarr[1].imshow(predicted)
+        axarr[1].set_title("predicted")
+        axarr[1].axis('off')
+
+        fig.tight_layout()
+        plt.show()

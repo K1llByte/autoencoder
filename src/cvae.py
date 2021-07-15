@@ -129,7 +129,7 @@ def make_model():
     encoder = Conv2D(32, 3, strides=2, padding="same", activation="relu")(encoder_inputs)
     encoder = Conv2D(64, 3, strides=2, padding="same", activation="relu")(encoder)
     volume_size = K.int_shape(encoder)
-    print(volume_size)
+    #print(volume_size)
     encoder = Flatten()(encoder)
     z_mean = Dense(LATENT_DIM)(encoder)
     z_logvar = Dense(LATENT_DIM)(encoder)
@@ -226,9 +226,9 @@ for epoch in range(1, EPOCHS + 1):
         rec_loss += tf.reduce_mean(reconstruction_loss)
         batch += 1
     print(f'Epoch {epoch}, loss: {epoch_loss/batch}, reconst loss: {rec_loss/batch}, KL loss: {kls_loss/batch}')
-    if epoch % 10 == 0:
-        generate_and_save_images(
-            decoder, epoch, random_vector_for_generation)
+    # if epoch % 10 == 0:
+    #     generate_and_save_images(
+    #         decoder, epoch, random_vector_for_generation)
 
 
 # Save weights
