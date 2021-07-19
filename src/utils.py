@@ -36,6 +36,16 @@ def plot_scatter(x,y,train_Y):
     
     
 # assumes len samples is a perfect square
+# def show_samples(samples):
+    
+#     k = int(math.sqrt(len(samples)))
+#     fig = plt.figure(figsize=(k,k))
+    
+#     for i in range(len(samples)):
+#         plt.subplot(k, k, i+1)
+#         plt.imshow(samples[i].reshape(28,28), cmap='gray')
+#         plt.axis('off')
+
 def show_samples(samples):
     
     k = int(math.sqrt(len(samples)))
@@ -43,5 +53,5 @@ def show_samples(samples):
     
     for i in range(len(samples)):
         plt.subplot(k, k, i+1)
-        plt.imshow(samples[i].reshape(28,28), cmap='gray')
+        plt.imshow(np.asarray(samples)[i, :, :, 0], cmap='gray')
         plt.axis('off')
