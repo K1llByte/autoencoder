@@ -3,6 +3,7 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.patches import Rectangle
+import numpy as np
 
 ##############################################################
 
@@ -47,7 +48,7 @@ def plot_scatter(x,y,train_Y):
 #         plt.axis('off')
 
 def show_samples(samples):
-    
+    import numpy as np
     k = int(math.sqrt(len(samples)))
     fig = plt.figure(figsize=(k,k))
     

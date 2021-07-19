@@ -1,6 +1,7 @@
 # imports
 import os
 import pathlib
+import math
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,12 +10,24 @@ import tensorflow.keras.layers as layers
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
+#from utils import *
+
 # Configuration
 HEIGHT = 64
 WIDTH = 64
 BATCH_SIZE = 8
 LATENT_SPACE_DIM = 64
 EPOCHS = 25
+
+def show_samples(samples):
+    import numpy as np
+    k = int(math.sqrt(len(samples)))
+    fig = plt.figure(figsize=(k,k))
+    
+    for i in range(len(samples)):
+        plt.subplot(k, k, i+1)
+        plt.imshow(np.asarray(samples)[i, :, :, 0], cmap='gray')
+        plt.axis('off')
 
 def convert_path_to_image(file_path):
   img = tf.io.read_file(file_path)

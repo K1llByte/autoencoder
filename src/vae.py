@@ -18,17 +18,27 @@ from matplotlib.patches import Rectangle
 
 from pathlib import Path
 
-from utils import *
+#from utils import *
 
 ###############################################################
 
 BATCH_SIZE = 64
 LATENT_DIM = 64
-EPOCHS = 1
+EPOCHS = 25
 IMAGE_SIZE = (64, 64)
 
 ###############################################################
 
+def show_samples(samples):
+    import numpy as np
+    k = int(math.sqrt(len(samples)))
+    fig = plt.figure(figsize=(k,k))
+    
+    for i in range(len(samples)):
+        plt.subplot(k, k, i+1)
+        plt.imshow(np.asarray(samples)[i, :, :, 0], cmap='gray')
+        plt.axis('off')
+        
 # def generate_and_save_images(model, epoch, test_input):
 #     predictions = model(test_input)
 #     fig = plt.figure(figsize=(16,256))
@@ -195,7 +205,7 @@ def train(in_model, data, epochs, save_path="models"):
     encoder, decoder, vae = in_model
     (train_dataset, train_len), (test_dataset, test_len) = data
 
-    model_dir = f"vae_{EPOCHS}e_{LATENT_DIM}l_{IMAGE_SIZE[0]}w"
+    model_dir = f"vae_{epochs}e_{LATENT_DIM}l_{IMAGE_SIZE[0]}w"
     # autoencoder_file = f"{save_path}/{model_dir}/autoencoder.h5"
     # encoder_file = f"{save_path}/{model_dir}/encoder.h5"
     # decoder_file = f"{save_path}/{model_dir}/decoder.h5"
@@ -266,6 +276,16 @@ def train(in_model, data, epochs, save_path="models"):
         print("[INFO] Loaded Trained Model")
 
     return (encoder, decoder, vae)
+
+def predict_all(in_model, in_data):
+    encoder, decoder, autoencoder = in_model
+    (data_set, data_len), (val_set, val_len) = in_data
+
+    
+    print("[INFO] Predicting set")
+    preds = autoencoder.predict(data_set)
+
+    return preds
 
 ###############################################################
 
