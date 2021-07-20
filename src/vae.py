@@ -161,10 +161,10 @@ def make_model():
     decoder = Reshape(target_shape=(16, 16, 64))(decoder)
     decoder = Conv2DTranspose(64, 3, strides=2, padding="same",  activation='relu')(decoder)
     decoder = Conv2DTranspose(32, 3, strides=2, padding="same",  activation='relu')(decoder)
-    # reduce to (28,28,1)  
+    # reduce to (28,28,1)
     decoder_output = Conv2DTranspose(1, 3, strides=(1, 1), padding="SAME", activation = 'sigmoid')(decoder)
 
-    decoder = Model(decoder_inputs, decoder_output)
+    decoder = Model(decoder_inputs, decoder_output, name = "decoder")
 
     ###############################################################
 
